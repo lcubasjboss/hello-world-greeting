@@ -1,9 +1,11 @@
 node() {
-stage('Poll') {
+ def mvnHome
+ stage('Poll') {
 checkout scm
+  mvnHome = tool 'M3'
 }
 stage('Build & Unit test'){
-sh 'mvn clean verify -DskipITs=true';
+sh "'${mvnHome}/bin/mvn' clean verify -DskipITs=true";
 junit '**/target/surefire-reports/TEST-*.xml'
 archive 'target/*.jar'
 }
